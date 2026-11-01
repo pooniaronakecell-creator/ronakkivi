@@ -1,0 +1,17 @@
+{
+  "name": "bolbill",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "first-call": "node --env-file=.env first-call.mjs",
+    "test": "node --test calculate.test.mjs"
+  },
+  "dependencies": {
+    "sarvamai": "^1.1.14"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

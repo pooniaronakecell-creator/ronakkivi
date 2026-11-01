@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {calculate} from './calculate.mjs';
+test('known subtotal excludes unresolved materials',()=>assert.deepEqual(calculate([{quantity:3,rate:600},{quantity:1,rate:1500},{quantity:null,rate:null}]),{amount:3300,missing:1}));
+test('decimal prices use paise',()=>assert.deepEqual(calculate([{quantity:3,rate:0.1},{quantity:1,rate:0.2}]),{amount:0.5,missing:0}));
+test('negative values cannot reduce total',()=>assert.deepEqual(calculate([{quantity:1,rate:-100}]),{amount:0,missing:1}));
+test('zero rate is valid',()=>assert.deepEqual(calculate([{quantity:1,rate:0}]),{amount:0,missing:0}));
+import {pricing} from './calculate.mjs';
+test('discount before tax',()=>assert.equal(pricing([{quantity:2,rate:1000}],10,18).total,2124));
+test('100 percent discount yields zero',()=>assert.equal(pricing([{quantity:1,rate:999}],100,18).total,0));
+test('reject invalid discount',()=>assert.throws(()=>pricing([],101,0)));
